@@ -43,10 +43,10 @@ const App = () => {
   return (
       <Router>
           <div className="page-wrapper">
-              <header className="banner h-14 px-2 md:px-0">
-                  <div className="container mx-auto flex flex-row py-2 items-center content-between">
-                      <Link to="/api/items" className="flex-grow-0 mr-14">
-                          <img src={logo} height="34" />
+              <header className="banner h-14">
+                  <div className="container mx-auto flex flex-row px-4 py-2 items-center content-between">
+                      <Link to="/" className="flex-grow-0 mr-14">
+                          <img src={logo} alt="logo" height="34" />
                       </Link>
                       <SearchBar keyword={query} setKeyword={keywordHandler}></SearchBar>
                   </div>

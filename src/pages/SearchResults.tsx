@@ -1,17 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, {useState, useEffect, ChangeEvent} from "react";
-import { useLocation, useHistory, Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import HttpClient from "../commons/HttpClient";
-import SearchBar from "../components/SearchBar";
 import { Endpoints } from "../config";
-import { ISearchResults, Result } from "../interfaces/ISearchResults";
-import { faList, faBorderAll, faSortAlphaDown, faSortAlphaUp, faSortNumericDown, faSortNumericUp, faSortAmountDown, faSortAmountUp, faStore, faThLarge, faQuestionCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { IProductDetails } from "interfaces/IProductDetails";
+import { ISearchResults } from "../interfaces/ISearchResults";
+import {
+    faList,
+    faBorderAll,
+    faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Breadcrumb from "components/Breadcrumb";
 import ContentHeader from "components/ContentHeader";
-import ProductItemCard from "components/ProductItemCard";
 import ProductList from "components/ProductList";
 import Loading from "components/Loading";
+import Empty from "components/Empty";
 
 /* function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -19,7 +21,6 @@ import Loading from "components/Loading";
 
 const SearchResults = () => {
     let params = new URLSearchParams(useLocation().search);
-    const history = useHistory();
     const location = useLocation();
 
     const [products, setProducts] = useState([]);
@@ -31,12 +32,6 @@ const SearchResults = () => {
     useEffect(() => {
         console.log(location.search);
         console.log(params.get("q"));
-
-        /* history.listen((location) => {
-            
-            console.log(`You changed the page to: ${location.pathname}`);
-            
-        }); */
         if (params.get("q")) {
             fetchProductResults();
         } else {
@@ -44,25 +39,20 @@ const SearchResults = () => {
         }
     }, [params.get("q")]);
 
-    const handleBack = () => {
-        history.goBack();
-    };
-
     const fetchProductResults = async () => {
         setLoading(true);
-        let text = params.get("q");
         try {
-            HttpClient.get(Endpoints.SEARCH.replace("{:query}", `${params.get("q")}`), {}, success, error, always);           
+            HttpClient.get(Endpoints.SEARCH.replace("{:query}", `${params.get("q")}`), {}, success, error, always);
             //setProduct(result);
         } catch (e) {
             error(e);
-        }  
+        }
     };
 
     const handleResultsGrid = () => {
         setResultsGrid(!resultsGrid);
         console.log(resultsGrid);
-    }
+    };
 
     const success = (response: any) => {
         const data = response.data;
@@ -84,34 +74,34 @@ const SearchResults = () => {
     const always = () => {
         setLoading(false);
     };
-    
+
     const getTotalSearchResults = () => {
         let data: ISearchResults = pageData;
         let results: string = " resultados";
         return data.paging.total + results;
-    }
-    
+    };
 
     return (
         <>
-            { loading ? <Loading></Loading> : 
-            pageData != null ? (
+            {loading ? (
+                <Loading></Loading>
+            ) : pageData != null ? (
                 <>
-                    {pageData.filters.length > 0 ? <Breadcrumb data={pageData}></Breadcrumb> : ""}                    
+                    {pageData.filters.length > 0 ? <Breadcrumb data={pageData}></Breadcrumb> : ""}
                     <ContentHeader title={params.get("q")} subtitle={pageData != null ? getTotalSearchResults() : ""}>
                         <section>
                             <FontAwesomeIcon
                                 onClick={handleResultsGrid}
                                 icon={faList}
-                                className={`mr-3 hidden sm:inline cursor-pointer ${
-                                    resultsGrid == false ? "text-meliBlue" : "text-black text-opacity-20"
+                                className={`mr-3 hidden md:inline cursor-pointer ${
+                                    resultsGrid === false ? "text-meliBlue" : "text-black text-opacity-20"
                                 }`}
                             />
                             <FontAwesomeIcon
                                 onClick={handleResultsGrid}
                                 icon={faBorderAll}
-                                className={`mr-6 hidden sm:inline cursor-pointer ${
-                                    resultsGrid == true ? "text-meliBlue" : "text-black text-opacity-20"
+                                className={`mr-6 hidden md:inline cursor-pointer ${
+                                    resultsGrid === true ? "text-meliBlue" : "text-black text-opacity-20"
                                 }`}
                             />
                             <FontAwesomeIcon
@@ -122,19 +112,12 @@ const SearchResults = () => {
                     </ContentHeader>{" "}
                 </>
             ) : (
-                ""
+                <Empty text="No hay resultados para su búsqueda"></Empty>
             )}
 
             <section className="grid gap-5 grid-cols-1 px-4 mb-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <ProductList data={products}></ProductList>
-                {/*  {products
-                    ? products.map((product: Result) => (
-                        <ProductItemCard data={product}></ProductItemCard>                          
-                      ))
-                    : ""} */}
             </section>
-            
-            
         </>
     );
 };

@@ -1,10 +1,5 @@
 import { ISearchResults } from "interfaces/ISearchResults";
-import React from "react";
 import BreadcrumbItem from "./BreadcrumbItem";
-
-/* const buildBreadCrumbs = () => {
-    var data: IProductDetails = pageData;
-}; */
 
 const Breadcrumb = (props: any) => {
     //let children = React.Children.toArray(props.children);
@@ -15,7 +10,7 @@ const Breadcrumb = (props: any) => {
         <BreadcrumbItem
             key={`breadcrumb_item${index}`}
             data={child}
-            chev={numberItems != index + 1 ? true : false}
+            chev={numberItems !== index + 1 ? true : false}
         ></BreadcrumbItem>
     )) : "";
     

@@ -6,7 +6,7 @@ const ProductList = ({ data = [] }) => {
     return (
         <>
             {data.map((product: Result, index) => (
-                <ProductItemCard data={product}></ProductItemCard>
+                <ProductItemCard key={product.id} data={product}></ProductItemCard>
             ))}
         </>
     );

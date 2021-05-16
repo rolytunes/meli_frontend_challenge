@@ -1,5 +1,6 @@
+import Home from "pages/Home";
 import { Suspense } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
@@ -13,8 +14,7 @@ export default function AppRouter() {
                 <Switch>
                     <Route exact path="/api/items/:id" component={ProductDetails}></Route>
                     <Route exact path="/api/items" component={SearchResults}></Route>
-                    <Route exact path="/">
-                        <Redirect to="/api/items" />
+                    <Route exact path="/" component={Home}>
                     </Route>
                     <Route component={NotFound} />
                 </Switch>
