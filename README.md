@@ -1,4 +1,4 @@
-# Getting Started with MELI Frontend Chalenge
+# Getting Started with MELI Frontend Challenge
 
 ## Available Scripts
 
