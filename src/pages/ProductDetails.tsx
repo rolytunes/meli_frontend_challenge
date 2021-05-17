@@ -173,7 +173,7 @@ const ProductDetails = ({ match }: RouteComponentProps<QueryParams>) => {
                                     </div>
                                 ))}
                             </section>
-                            <section className="bg-gray-50 p-3">advertising</section>
+                            <section className="bg-gray-50 p-3"></section>
                         </div>
                     </article>
                 </>
