@@ -30,8 +30,8 @@ const SearchResults = () => {
     const [resultsGrid, setResultsGrid] = useState(true);
 
     useEffect(() => {
-        console.log(location.search);
-        console.log(params.get("q"));
+        //console.log(location.search);
+        //console.log(params.get("q"));
         if (params.get("q")) {
             fetchProductResults();
         } else {
@@ -51,7 +51,7 @@ const SearchResults = () => {
 
     const handleResultsGrid = () => {
         setResultsGrid(!resultsGrid);
-        console.log(resultsGrid);
+        //console.log(resultsGrid);
     };
 
     const success = (response: any) => {
@@ -62,11 +62,11 @@ const SearchResults = () => {
         console.log(data);
         setPageData(data);
         setProducts(data.results);
-        console.log(products);
+        //console.log(products);
     };
 
     const error = (e: any) => {
-        console.log(e);
+        //console.log(e);
         setHasError(true);
         //notification here
     };
